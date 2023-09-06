@@ -6,7 +6,7 @@
 /*   By: myanez-p <myanez-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 10:44:03 by myanez-p          #+#    #+#             */
-/*   Updated: 2023/09/06 15:15:23 by myanez-p         ###   ########.fr       */
+/*   Updated: 2023/09/06 18:39:50 by myanez-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,9 @@ void	send_message(char *message, int pid_server);
 
 char	*add_char_to_message(char *message, int c);
 void	receive_message(int num_signal, siginfo_t *info, void *context);
+
+//utils.c
+
+void	error_management(int type);
 
 #endif

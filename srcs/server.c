@@ -6,7 +6,7 @@
 /*   By: myanez-p <myanez-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 11:48:49 by myanez-p          #+#    #+#             */
-/*   Updated: 2023/09/06 17:28:09 by myanez-p         ###   ########.fr       */
+/*   Updated: 2023/09/06 18:38:21 by myanez-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,8 @@ void	receive_message(int num_signal, siginfo_t *info, void *context)
 		if (current_char == '\0')
 		{
 			ft_printf("%s\n", message);
-			kill(info->si_pid, SIGUSR1);
+			if (kill(info->si_pid, SIGUSR1) == -1)
+				error_management(3);
 			free(message);
 			message = NULL;
 		}
@@ -84,7 +85,7 @@ int	main(void)
 	sigaction(SIGUSR2, &s_sigaction, NULL);
 	if (sigaction(SIGUSR1, &s_sigaction, NULL) == -1
 		|| sigaction(SIGUSR2, &s_sigaction, NULL) == -1)
-		return (1);
+		error_management(4);
 	while (1)
 		pause();
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: myanez-p <myanez-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 11:48:45 by myanez-p          #+#    #+#             */
-/*   Updated: 2023/09/06 15:27:57 by myanez-p         ###   ########.fr       */
+/*   Updated: 2023/09/06 18:43:59 by myanez-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,9 @@ void	send_end_message(int pid_server)
 	i = 0;
 	while (i < 8)
 	{
-		kill(pid_server, SIGUSR1);
-		usleep(100);
+		if (kill(pid_server, SIGUSR1) == -1)
+			error_management(5);
+		usleep(50);
 		i ++;
 	}
 }
@@ -56,10 +57,16 @@ void	send_message(char *message, int pid_server)
 		while (nbit < 8)
 		{
 			if ((message[nletter] >> (7 - nbit)) & 1)
-				kill(pid_server, SIGUSR2);
+			{
+				if (kill(pid_server, SIGUSR2) == -1)
+					error_management(0);
+			}
 			else
-				kill(pid_server, SIGUSR1);
-			usleep(100);
+			{
+				if (kill(pid_server, SIGUSR1) == -1)
+					error_management(0);
+			}
+			usleep(50);
 			nbit++;
 		}
 		nletter++;
@@ -75,16 +82,19 @@ int	main(int argc, char **argv)
 
 	signal(SIGUSR1, receive_confirmation);
 	if (!signal(SIGUSR1, receive_confirmation))
-		return (1);
-	if (argc == 3)
+		error_management(1);
+	pid_server = ft_atoi(argv[1]);
+	message = argv[2];
+	if (argc == 3 && message[0] != 0 && pid_server)
 	{
-		pid_server = ft_atoi(argv[1]);
-		message = argv[2];
-		send_message(message, pid_server);
-		send_end_message(pid_server);
+		if (message[0] != 0 && pid_server)
+		{
+			send_message(message, pid_server);
+			send_end_message(pid_server);
+		}	
 	}
 	else
-		ft_printf("Please enter : ./client <pid_server> <your message>\n");
+		error_management(2);
 	while (!g_message_received)
 		pause();
 	ft_printf("Message received.\n");

@@ -6,7 +6,7 @@
 #    By: myanez-p <myanez-p@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/18 11:49:16 by myanez-p          #+#    #+#              #
-#    Updated: 2023/09/06 15:08:34 by myanez-p         ###   ########.fr        #
+#    Updated: 2023/09/06 18:40:30 by myanez-p         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,10 +47,10 @@ ${NAME} : server client
 all : ${NAME}
 
 server : ${OBJS}
-	@${GCC} ${CFLAGS} -I ${HEADERS} objs/server.o -Llibft -lft -o server
+	@${GCC} ${CFLAGS} -I ${HEADERS} objs/utils.o objs/server.o -Llibft -lft -o server
 	
 client : ${OBJS}
-	@${GCC} ${CFLAGS} -I ${HEADERS} objs/client.o -Llibft -lft -o client
+	@${GCC} ${CFLAGS} -I ${HEADERS} objs/utils.o objs/client.o -Llibft -lft -o client
 
 # Nettoyage
 
