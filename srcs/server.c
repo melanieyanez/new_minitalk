@@ -6,7 +6,7 @@
 /*   By: myanez-p <myanez-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 11:48:49 by myanez-p          #+#    #+#             */
-/*   Updated: 2023/09/06 15:20:37 by myanez-p         ###   ########.fr       */
+/*   Updated: 2023/09/06 17:28:09 by myanez-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,7 @@ int	main(void)
 	struct sigaction	s_sigaction;
 
 	s_sigaction.sa_sigaction = receive_message;
-	s_sigaction.sa_flags = SA_SIGINFO | SA_RESTART | SA_NODEFER;
-	sigemptyset(&s_sigaction.sa_mask);
+	s_sigaction.sa_flags = SA_SIGINFO;
 	ft_printf("Server PID: %d\n", getpid());
 	sigaction(SIGUSR1, &s_sigaction, NULL);
 	sigaction(SIGUSR2, &s_sigaction, NULL);
