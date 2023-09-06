@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   server.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: melanieyanez <melanieyanez@student.42.f    +#+  +:+       +#+        */
+/*   By: myanez-p <myanez-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 11:48:49 by myanez-p          #+#    #+#             */
-/*   Updated: 2023/09/05 22:46:28 by melanieyane      ###   ########.fr       */
+/*   Updated: 2023/09/06 15:20:37 by myanez-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minitalk.h"
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - */
-/* peut etre remplacer par strjoin pour que ce soit plus clean */
+/* Permet d'ajouter chaque caractère reçu au message */
 
 char	*add_char_to_message(char *message, int c)
 {
@@ -43,9 +43,6 @@ char	*add_char_to_message(char *message, int c)
 /* Handler des signaux reçus */
 /* qui permet de transformer le binaire en caractères */
 
-/* attention peut-etre il faut initialiser current char et count */
-/* quand meme essayer d'inserer ma methode */
-
 void	receive_message(int num_signal, siginfo_t *info, void *context)
 {
 	static char	*message;
@@ -72,7 +69,6 @@ void	receive_message(int num_signal, siginfo_t *info, void *context)
 		count = 0;
 		current_char = 0;
 	}
-	usleep(100);
 }
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - */
@@ -87,6 +83,9 @@ int	main(void)
 	ft_printf("Server PID: %d\n", getpid());
 	sigaction(SIGUSR1, &s_sigaction, NULL);
 	sigaction(SIGUSR2, &s_sigaction, NULL);
+	if (sigaction(SIGUSR1, &s_sigaction, NULL) == -1
+		|| sigaction(SIGUSR2, &s_sigaction, NULL) == -1)
+		return (1);
 	while (1)
 		pause();
 	return (0);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minitalk.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: melanieyanez <melanieyanez@student.42.f    +#+  +:+       +#+        */
+/*   By: myanez-p <myanez-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 10:44:03 by myanez-p          #+#    #+#             */
-/*   Updated: 2023/09/05 15:35:15 by melanieyane      ###   ########.fr       */
+/*   Updated: 2023/09/06 15:15:23 by myanez-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,15 @@
 # include <unistd.h>
 # include "../libft/includes/libft.h"
 
-typedef struct message
-{
-	int	value;
-	int	power;
-}t_message;
+//client.c
+
+void	receive_confirmation(int num_signal);
+void	send_end_message(int pid_server);
+void	send_message(char *message, int pid_server);
+
+//server.c
+
+char	*add_char_to_message(char *message, int c);
+void	receive_message(int num_signal, siginfo_t *info, void *context);
 
 #endif

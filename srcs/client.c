@@ -3,25 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   client.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: melanieyanez <melanieyanez@student.42.f    +#+  +:+       +#+        */
+/*   By: myanez-p <myanez-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 11:48:45 by myanez-p          #+#    #+#             */
-/*   Updated: 2023/09/05 22:43:40 by melanieyane      ###   ########.fr       */
+/*   Updated: 2023/09/06 13:09:22 by myanez-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minitalk.h"
 
+int	g_message_received = 0;
+
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - */
+/* Handler de réception du signal de confimation */
 
 void	receive_confirmation(int num_signal)
 {
 	(void)num_signal;
-	ft_printf("Message received\n");
-	exit(0);
+	g_message_received = 1;
 }
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - */
+/* Envoie 0 pour signaler la fin du message */
 
 void	send_end_message(int pid_server)
 {
@@ -71,6 +74,8 @@ int	main(int argc, char **argv)
 	char				*message;
 
 	signal(SIGUSR1, receive_confirmation);
+	if (!signal(SIGUSR1, receive_confirmation))
+		return (1);
 	if (argc == 3)
 	{
 		pid_server = ft_atoi(argv[1]);
@@ -80,7 +85,8 @@ int	main(int argc, char **argv)
 	}
 	else
 		ft_printf("Please enter : ./client <pid_server> <your message>\n");
-	while (1)
+	while (!g_message_received)
 		pause();
+	ft_printf("Message received.\n");
 	return (0);
 }

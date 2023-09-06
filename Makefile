@@ -6,14 +6,16 @@
 #    By: myanez-p <myanez-p@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/18 11:49:16 by myanez-p          #+#    #+#              #
-#    Updated: 2023/04/18 17:06:10 by myanez-p         ###   ########.fr        #
+#    Updated: 2023/09/06 15:08:34 by myanez-p         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
+NAME = minitalk
 
 # Dossiers
 
 SRCDIR = srcs
-OBJDIR = objs/
+OBJDIR = objs
 HDRDIR = includes
 
 # Fichiers
@@ -34,18 +36,21 @@ RM = rm -Rf
 
 # Règles
 
-all : server client
+${OBJDIR}/%.o : ${SRCDIR}/%.c
+		@${MKDIR} -p ${OBJDIR}
+		@if [ ! -f libft/libft.a ]; then make -C libft; fi
+		@${GCC} ${CFLAGS} -I ${HEADERS} -c $< -o $@
+	
+
+${NAME} : server client
+
+all : ${NAME}
 
 server : ${OBJS}
 	@${GCC} ${CFLAGS} -I ${HEADERS} objs/server.o -Llibft -lft -o server
 	
 client : ${OBJS}
 	@${GCC} ${CFLAGS} -I ${HEADERS} objs/client.o -Llibft -lft -o client
-
-${OBJDIR}%.o : ${SRCDIR}%.c
-	@${MKDIR} -p ${OBJDIR}
-	@if [ ! -f libft/libft.a ]; then make -C libft; fi
-	@${GCC} ${CFLAGS} -I ${HEADERS} -c $< -o $@
 
 # Nettoyage
 
