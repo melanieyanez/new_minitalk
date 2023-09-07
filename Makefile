@@ -6,7 +6,7 @@
 #    By: melanieyanez <melanieyanez@student.42.f    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/18 11:49:16 by myanez-p          #+#    #+#              #
-#    Updated: 2023/09/07 12:18:06 by melanieyane      ###   ########.fr        #
+#    Updated: 2023/09/07 12:28:33 by melanieyane      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,10 @@ RM = rm -Rf
 
 ${OBJDIR}/%.o : ${SRCDIR}/%.c
 		@${MKDIR} -p ${OBJDIR}
-		@if [ ! -f libft/libft.a ]; then make -C libft; fi
+		@if [ ! -f libft/libft.a ]; then \
+			echo "\nCompiling the libft library...\n"; \
+			make -C libft; \
+		fi
 		@echo "Compiling $< into ${@F}..."
 		@${GCC} ${CFLAGS} -I ${HEADERS} -c $< -o $@
 	
