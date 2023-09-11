@@ -6,7 +6,7 @@
 /*   By: myanez-p <myanez-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 10:44:03 by myanez-p          #+#    #+#             */
-/*   Updated: 2023/09/06 18:39:50 by myanez-p         ###   ########.fr       */
+/*   Updated: 2023/09/11 16:37:36 by myanez-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,6 @@ void	receive_message(int num_signal, siginfo_t *info, void *context);
 //utils.c
 
 void	error_management(int type);
+void	arguments_checker(char **argv, int pid_server, char *message);
 
 #endif

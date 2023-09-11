@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: melanieyanez <melanieyanez@student.42.f    +#+  +:+       +#+         #
+#    By: myanez-p <myanez-p@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/18 11:49:16 by myanez-p          #+#    #+#              #
-#    Updated: 2023/09/07 12:28:33 by melanieyane      ###   ########.fr        #
+#    Updated: 2023/09/11 16:37:11 by myanez-p         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,16 +39,14 @@ RM = rm -Rf
 ${OBJDIR}/%.o : ${SRCDIR}/%.c
 		@${MKDIR} -p ${OBJDIR}
 		@if [ ! -f libft/libft.a ]; then \
-			echo "\nCompiling the libft library...\n"; \
+			echo "Compiling the libft library...\n"; \
 			make -C libft; \
 		fi
 		@echo "Compiling $< into ${@F}..."
 		@${GCC} ${CFLAGS} -I ${HEADERS} -c $< -o $@
-	
 
 ${NAME} : server client
-	@echo "\nAll done!"
-
+	
 all : ${NAME}
 
 server : ${OBJS}
@@ -62,19 +60,22 @@ client : ${OBJS}
 # Nettoyage
 
 clean : 
-		@echo "Cleaning...\n"
+		@echo "Cleaning..."
 		@make clean -C libft
 		@${RM} ${OBJS}
 		@${RM} ${OBJDIR}
 
 fclean :	clean
-			@echo "Full cleaning...\n"
+			@echo ""
+			@echo "Full cleaning..."
 			@make fclean -C libft
 			@${RM} server
 			@${RM} client
 
 # Autres règles
 
-re : fclean all
+re : fclean
+	@echo ""
+	@make all
 
 .PHONY: re fclean clean all

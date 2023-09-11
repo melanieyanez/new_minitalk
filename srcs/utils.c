@@ -6,11 +6,29 @@
 /*   By: myanez-p <myanez-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 18:38:42 by myanez-p          #+#    #+#             */
-/*   Updated: 2023/09/06 18:53:17 by myanez-p         ###   ########.fr       */
+/*   Updated: 2023/09/11 16:37:56 by myanez-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minitalk.h"
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+void	arguments_checker(char **argv, int pid_server, char *message)
+{
+	int	i;
+
+	i = 0;
+	while (argv[1][i])
+	{
+		if (ft_isdigit(argv[1][i]) == 1)
+			i ++;
+		else
+			error_management(2);
+	}
+	if (message[0] == 0 || !pid_server)
+		error_management(2);
+}
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - */
 

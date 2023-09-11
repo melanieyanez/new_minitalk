@@ -6,7 +6,7 @@
 /*   By: myanez-p <myanez-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 11:48:45 by myanez-p          #+#    #+#             */
-/*   Updated: 2023/09/06 18:43:59 by myanez-p         ###   ########.fr       */
+/*   Updated: 2023/09/11 16:37:25 by myanez-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,24 +79,24 @@ int	main(int argc, char **argv)
 {
 	int					pid_server;
 	char				*message;
+	int					i;
 
+	i = 0;
 	signal(SIGUSR1, receive_confirmation);
 	if (!signal(SIGUSR1, receive_confirmation))
 		error_management(1);
-	pid_server = ft_atoi(argv[1]);
-	message = argv[2];
-	if (argc == 3 && message[0] != 0 && pid_server)
+	if (argc == 3)
 	{
-		if (message[0] != 0 && pid_server)
-		{
-			send_message(message, pid_server);
-			send_end_message(pid_server);
-		}	
+		pid_server = ft_atoi(argv[1]);
+		message = argv[2];
+		arguments_checker(argv, pid_server, message);
+		send_message(message, pid_server);
+		send_end_message(pid_server);
+		while (!g_message_received)
+			pause();
+		ft_printf("Message received.\n");
 	}
 	else
 		error_management(2);
-	while (!g_message_received)
-		pause();
-	ft_printf("Message received.\n");
 	return (0);
 }
